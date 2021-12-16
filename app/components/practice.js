@@ -17,9 +17,11 @@ export default class ClothesComponent extends Component {
   //transition = fade;
 
   *transition({ insertedSprites, removedSprites, duration }) {
-    for (let sprite of removedSprites) {
-      yield fadeOut(sprite, { duration: duration / 2 });
-    }
+    yield Promise.all(
+      removedSprites.map((sprite) =>
+        fadeOut(sprite, { duration: duration / 2 })
+      )
+    );
     for (let sprite of insertedSprites) {
       fadeIn(sprite, { duration: duration / 2 });
     }
