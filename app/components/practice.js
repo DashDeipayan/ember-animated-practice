@@ -16,12 +16,15 @@ export default class ClothesComponent extends Component {
   //Declaring custom fade animation using es-generators
   //transition = fade;
 
-  *transition({ insertedSprites, removedSprites, duration }) {
+  *transition({ insertedSprites, keptSprites, removedSprites, duration }) {
     yield Promise.all(
       removedSprites.map((sprite) =>
         fadeOut(sprite, { duration: duration / 2 })
       )
     );
+    for (let sprite of keptSprites) {
+      fadeIn(sprite, { duration: duration / 2 });
+    }
     for (let sprite of insertedSprites) {
       fadeIn(sprite, { duration: duration / 2 });
     }
