@@ -1,4 +1,3 @@
-/* eslint-disable require-yield */
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -17,12 +16,12 @@ export default class ClothesComponent extends Component {
   //Declaring custom fade animation using es-generators
   //transition = fade;
 
-  *transition({ insertedSprites, removedSprites }) {
-    for (let sprite of insertedSprites) {
-      fadeIn(sprite);
-    }
+  *transition({ insertedSprites, removedSprites, duration }) {
     for (let sprite of removedSprites) {
-      fadeOut(sprite);
+      yield fadeOut(sprite, { duration: duration / 2 });
+    }
+    for (let sprite of insertedSprites) {
+      fadeIn(sprite, { duration: duration / 2 });
     }
   }
 }
